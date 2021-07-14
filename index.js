@@ -6,53 +6,15 @@ const fileUpload = require('express-fileUpload')
 const MongoClient = require('mongodb').MongoClient;
 require('dotenv').config()
 
-
+const port = 5000;
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.dj8zc.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
 
 const app = express()
-
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static('doctors'));
 app.use(fileUpload());
-
-const port = 5000;
-
-
-
-
-
-
-
-
-
-
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-  });
-}
-
-// app.use(express.static(path.join(__dirname, 'client/build')));
-app.use('*/css',express.static('public/css'));
-app.use('*/js',express.static('public/js'));
-app.use('*/images',express.static('public/images'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.urlencoded())
-app.use(cors())
-
-
-
-
-
-
-
-
-
-
 
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
