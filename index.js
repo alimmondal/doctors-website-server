@@ -6,7 +6,7 @@ const fileUpload = require('express-fileUpload')
 const MongoClient = require('mongodb').MongoClient;
 require('dotenv').config()
 
-const port = 5000;
+
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.dj8zc.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
 
@@ -16,6 +16,7 @@ app.use(cors());
 app.use(express.static('doctors'));
 app.use(fileUpload());
 
+const port = 5000
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
@@ -99,24 +100,9 @@ app.post('/isAdmins', (req, res) => {
 
 
 
-
-
   console.log("db connection established")
 });
 
-
-if (process.env.NODE_ENV === 'production') {
-    // Express will serve up production assets
-    // like main.js or main.css
-    app.use(express.static('client/build'));
-  
-    // Express will serve up the index.html file if
-    // it doesnt recognize the route
-    const path = require('path');
-    app.get('*', (req, res) => {
-      res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-    });
-  }
 
 
 app.get('/', (req, res) => {
@@ -125,6 +111,6 @@ app.get('/', (req, res) => {
 
 
 
-app.listen(process.env.PORT || 5000)
+app.listen(process.env.PORT || port)
 
 
